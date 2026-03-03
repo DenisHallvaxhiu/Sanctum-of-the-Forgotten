@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour {
 
     [Header("Jump")]
     [SerializeField] private float jumpImpulse = 6f;
-    private float groundCheckDistance = 0.2f;
+    private float groundCheckDistance = 1.5f;
     [SerializeField] private LayerMask groundMask = ~0; //It makes everything as default
 
     //Optional for later
@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour {
     private float crouchScaleY = 0.6f;
 
     private Rigidbody rb;
+    private Collider col;
     private Vector2 moveInput;
 
     private bool isSprinting;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
         rb.freezeRotation = true;
     }
 
@@ -47,9 +49,23 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     //Checks if player is grounded
-    private bool IsGrounded() {
-        Vector3 origin = transform.position + Vector3.up * 0.1f;
-        return Physics.Raycast(origin,Vector3.down,groundCheckDistance,groundMask);
+    //private bool IsGrounded() {
+    //    Vector3 origin = transform.position + Vector3.up * 0.1f;
+    //    Debug.DrawRay(origin, Vector3.down * groundCheckDistance, Color.red);
+    //    return Physics.Raycast(origin,Vector3.down,groundCheckDistance,groundMask);
+    //}
+
+    private bool IsGrounded()
+    {
+        float extraDistance = 0.05f; // small buffer
+        Vector3 origin = col.bounds.center;
+        float rayLength = col.bounds.extents.y + extraDistance;
+
+        bool hit = Physics.Raycast(origin, Vector3.down, rayLength, groundMask, QueryTriggerInteraction.Ignore);
+
+        Debug.DrawRay(origin, Vector3.down * rayLength, hit ? Color.green : Color.red);
+
+        return hit;
     }
 
     //Player inputs (Move,Sprint,Crouch,Jump)
@@ -59,7 +75,8 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void OnSprint(InputValue value) {
-        isSprinting = value.isPressed;
+        if(!value.isPressed) return;
+        isSprinting = !isSprinting;
         Debug.Log("Sprint");
     }
     public void OnCrouch(InputValue value) {

@@ -61,17 +61,13 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 origin = col.bounds.center;
         float rayLength = col.bounds.extents.y + extraDistance;
 
-        bool hit = Physics.Raycast(origin, Vector3.down, rayLength, groundMask, QueryTriggerInteraction.Ignore);
-
-        Debug.DrawRay(origin, Vector3.down * rayLength, hit ? Color.green : Color.red);
-
+        bool hit = Physics.Raycast(origin, Vector3.down, rayLength, groundMask);
         return hit;
     }
 
     //Player inputs (Move,Sprint,Crouch,Jump)
     public void OnMove(InputValue value) {
         moveInput = value.Get<Vector2>();
-
     }
 
     public void OnSprint(InputValue value) {
@@ -82,8 +78,6 @@ public class PlayerMovement : MonoBehaviour {
     public void OnCrouch(InputValue value) {
         if(!value.isPressed) return;
         isCrouching = !isCrouching;
-        Debug.Log("Crouch");
-
     }
 
     public void OnJump(InputValue value) {
@@ -95,7 +89,5 @@ public class PlayerMovement : MonoBehaviour {
         rb.linearVelocity = vector;
 
         rb.AddForce(Vector3.up * jumpImpulse,ForceMode.Impulse);
-        Debug.Log("Jump");
-
     }
 }

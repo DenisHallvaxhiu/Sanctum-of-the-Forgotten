@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
 
     //Parameters for player input action
     [Header("Movement")]
@@ -26,34 +27,37 @@ public class PlayerMovement : MonoBehaviour {
     private bool isSprinting;
     private bool isCrouching;
 
-    private void Awake() {
+    //Events
+    private PlayerEvents playerEvents;
+
+    private void Awake()
+    {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         rb.freezeRotation = true;
+        playerEvents = GetComponent<PlayerEvents>();
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         //handles speed movements and its multipliers
         float speed = walkSpeed;
-        if(isSprinting) {
+        if (isSprinting)
+        {
             speed *= sprintMultiplier;
         }
-        if(isCrouching) {
+        if (isCrouching)
+        {
             speed *= crouchMultiplier;
         }
 
-        Vector3 location = new Vector3(moveInput.x,0f,moveInput.y) * speed;
+        Vector3 location = new Vector3(moveInput.x, 0f, moveInput.y) * speed;
 
         location.y = rb.linearVelocity.y;
         rb.linearVelocity = location;
     }
 
-    //Checks if player is grounded
-    //private bool IsGrounded() {
-    //    Vector3 origin = transform.position + Vector3.up * 0.1f;
-    //    Debug.DrawRay(origin, Vector3.down * groundCheckDistance, Color.red);
-    //    return Physics.Raycast(origin,Vector3.down,groundCheckDistance,groundMask);
-    //}
+
 
     private bool IsGrounded()
     {
@@ -66,28 +70,33 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     //Player inputs (Move,Sprint,Crouch,Jump)
-    public void OnMove(InputValue value) {
+    public void OnMove(InputValue value)
+    {
         moveInput = value.Get<Vector2>();
+        playerEvents.RaiseMove(!(moveInput == Vector2.zero));
     }
 
-    public void OnSprint(InputValue value) {
-        if(!value.isPressed) return;
-        isSprinting = !isSprinting;
-        Debug.Log("Sprint");
+    public void OnSprint(InputValue value)
+    {
+        isSprinting = value.isPressed;
+        playerEvents.RaiseSprint(isSprinting);
     }
-    public void OnCrouch(InputValue value) {
-        if(!value.isPressed) return;
+    public void OnCrouch(InputValue value)
+    {
+        if (!value.isPressed) return;
         isCrouching = !isCrouching;
     }
 
-    public void OnJump(InputValue value) {
-        if(!value.isPressed) return;
-        if(!IsGrounded()) return;
+    public void OnJump(InputValue value)
+    {
+        if (!value.isPressed) return;
+        if (!IsGrounded()) return;
 
         Vector3 vector = rb.linearVelocity;
         vector.y = 0f;
         rb.linearVelocity = vector;
 
-        rb.AddForce(Vector3.up * jumpImpulse,ForceMode.Impulse);
+        rb.AddForce(Vector3.up * jumpImpulse, ForceMode.Impulse);
+        playerEvents.RaiseJump();
     }
 }

@@ -3633,6 +3633,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   bodyToScale: {fileID: 0}
+  rotationSpeed: 10
 --- !u!54 &907570636
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5544,8 +5545,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.041417517, y: 0.011725271, z: 0.04541672}
-  m_Center: {x: 0.000092472874, y: -0.000007877357, z: 0.022157207}
+  m_Size: {x: 0.041417524, y: 0.004052775, z: 0.045416724}
+  m_Center: {x: 0.000092472976, y: -0.00022918888, z: 0.02215721}
 --- !u!1001 &1504729358
 PrefabInstance:
   m_ObjectHideFlags: 0

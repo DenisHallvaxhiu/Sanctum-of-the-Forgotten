@@ -19,4 +19,5 @@ public class PlayerEvents : MonoBehaviour {
     public void RaiseJump() {
         Jump?.Invoke();
     }
+    
 }

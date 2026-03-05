@@ -353,20 +353,73 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7777057793763974198, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.4893377
+      objectReference: {fileID: 0}
+    - target: {fileID: -7777057793763974198, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90.71281
+      objectReference: {fileID: 0}
+    - target: {fileID: -7777057793763974198, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 99.12641
+      objectReference: {fileID: 0}
+    - target: {fileID: -5480977901411583989, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 2.0531821
+      objectReference: {fileID: 0}
+    - target: {fileID: -5480977901411583989, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.027771465
+      objectReference: {fileID: 0}
+    - target: {fileID: -5480977901411583989, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.15404436
+      objectReference: {fileID: 0}
+    - target: {fileID: -1070350730909333850, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -6.3947783
+      objectReference: {fileID: 0}
+    - target: {fileID: -1070350730909333850, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.48803434
+      objectReference: {fileID: 0}
+    - target: {fileID: -1070350730909333850, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.608883
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
       propertyPath: m_Name
       value: Erika Archer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5097370190579632962, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -9.710762
+      objectReference: {fileID: 0}
+    - target: {fileID: 5097370190579632962, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.31709763
+      objectReference: {fileID: 0}
+    - target: {fileID: 5097370190579632962, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -1.8324695
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 28b01313a0cc3da45ab93107fc4332ce, type: 2}
     - target: {fileID: 5866666021909216657, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4936884950917866777, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2a4d5b9c8a0b59a44bb1b2d157d2b3af, type: 3}

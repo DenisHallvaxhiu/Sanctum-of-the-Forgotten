@@ -9,6 +9,7 @@ public class PlayerAnimationController : MonoBehaviour {
     //Animator Params
     const string MOVE = "isMoving";
     const string RUN = "isRunning";
+    const string JUMP = "isJumping";
 
     private void Awake() {
         animator = GetComponent<Animator>();
@@ -27,7 +28,8 @@ public class PlayerAnimationController : MonoBehaviour {
         playerEvents.Jump -= PlayerEvents_Jump;
     }
     private void PlayerEvents_Jump() {
-        throw new System.NotImplementedException();
+        animator.SetTrigger(JUMP);
+        Debug.Log("Jump animation triggered");
     }
 
     private void PlayerEvents_Sprint(bool isRunning) {

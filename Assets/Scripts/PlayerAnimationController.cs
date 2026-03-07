@@ -7,9 +7,10 @@ public class PlayerAnimationController : MonoBehaviour {
 
 
     //Animator Params
-    const string MOVE = "isMoving";
+    const string MOVE_STRAIGHT = "isMovingStraight";
     const string RUN = "isRunning";
     const string JUMP = "isJumping";
+    const string CROUCH = "isCrouching";
 
     private void Awake() {
         animator = GetComponent<Animator>();
@@ -20,6 +21,11 @@ public class PlayerAnimationController : MonoBehaviour {
         playerEvents.Move += PlayerEvents_Move;
         playerEvents.Sprint += PlayerEvents_Sprint;
         playerEvents.Jump += PlayerEvents_Jump;
+        playerEvents.Crouch += PlayerEvents_Crouch;
+    }
+
+    private void PlayerEvents_Crouch(bool isCrouching) {
+        animator.SetBool(CROUCH,isCrouching);
     }
 
     private void OnDisable() {
@@ -29,7 +35,6 @@ public class PlayerAnimationController : MonoBehaviour {
     }
     private void PlayerEvents_Jump() {
         animator.SetTrigger(JUMP);
-        Debug.Log("Jump animation triggered");
     }
 
     private void PlayerEvents_Sprint(bool isRunning) {
@@ -37,6 +42,7 @@ public class PlayerAnimationController : MonoBehaviour {
     }
 
     private void PlayerEvents_Move(bool isMoving) {
-        animator.SetBool(MOVE,isMoving);
+        animator.SetBool(MOVE_STRAIGHT,isMoving);
     }
+
 }

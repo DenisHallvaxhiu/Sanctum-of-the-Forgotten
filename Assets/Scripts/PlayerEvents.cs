@@ -6,6 +6,7 @@ public class PlayerEvents : MonoBehaviour {
     public event Action<bool> Move;
     public event Action<bool> Sprint;
     public event Action Jump;
+    public event Action<bool> Crouch;
 
 
     public void RaiseMove(bool value) {
@@ -19,5 +20,9 @@ public class PlayerEvents : MonoBehaviour {
     public void RaiseJump() {
         Jump?.Invoke();
     }
-    
+
+    public void RaiseCrouch(bool isCrouching) {
+        Crouch?.Invoke(isCrouching);
+    }
+
 }

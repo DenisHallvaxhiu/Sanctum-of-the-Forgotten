@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private LayerMask groundMask = ~0;
 
     [Header("Crouch")]
-    [SerializeField] private Transform bodyToScale;
+    [SerializeField] private Transform playerVisual;
     private float crouchScaleY = 0.6f;
 
     [Header("Rotation")]
@@ -76,6 +76,17 @@ public class PlayerMovement : MonoBehaviour {
 
     public void OnCrouch(InputValue value) {
         isCrouching = !isCrouching;
+
+        float parentScale = isCrouching ? 0.65f : 1f;
+
+        Vector3 scale = transform.localScale;
+        scale.y = parentScale;
+        transform.localScale = scale;
+
+        Vector3 childScale = playerVisual.localScale;
+        childScale.y = 1f / parentScale;
+        playerVisual.localScale = childScale;
+
         playerEvents.RaiseCrouch(isCrouching);
     }
 
@@ -89,5 +100,13 @@ public class PlayerMovement : MonoBehaviour {
 
         rb.AddForce(Vector3.up * jumpImpulse,ForceMode.Impulse);
         playerEvents.RaiseJump();
+    }
+
+    public void OnAttack(InputValue value) {
+        Debug.Log("Primary");
+    }
+
+    public void OnDefend(InputValue value) {
+        Debug.Log("Secondary");
     }
 }

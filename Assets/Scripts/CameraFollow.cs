@@ -17,6 +17,11 @@ public class CameraFollow : MonoBehaviour {
     [Header("Height Smoothing")]
     public float heightSmoothSpeed = 10f;
 
+    [Header("Collision")]
+    public float collisionRadius = 0.25f;
+    public float collisionBuffer = 0.15f;
+    public LayerMask collisionMask;
+
     public float Yaw => yaw;
 
     private float yaw = 0f;
@@ -46,9 +51,31 @@ public class CameraFollow : MonoBehaviour {
         currentFollowY = Mathf.Lerp(currentFollowY,desiredY,heightSmoothSpeed * Time.deltaTime);
 
         Vector3 targetPos = new Vector3(target.position.x,currentFollowY,target.position.z);
-        Vector3 offset = rotation * new Vector3(0f,0f,-distance);
 
-        transform.position = targetPos + offset;
+        Vector3 desiredCameraPos = targetPos + rotation * new Vector3(0f,0f,-distance);
+
+        Vector3 direction = desiredCameraPos - targetPos;
+        float desiredDistance = direction.magnitude;
+
+        if(desiredDistance > 0.01f) {
+            direction.Normalize();
+
+            RaycastHit hit;
+            if(Physics.SphereCast(
+                targetPos,
+                collisionRadius,
+                direction,
+                out hit,
+                desiredDistance,
+                collisionMask,
+                QueryTriggerInteraction.Ignore)) {
+
+                float safeDistance = Mathf.Max(0.05f,hit.distance - collisionBuffer);
+                desiredCameraPos = targetPos + direction * safeDistance;
+            }
+        }
+
+        transform.position = desiredCameraPos;
         transform.rotation = rotation;
     }
 }

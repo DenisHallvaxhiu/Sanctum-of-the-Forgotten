@@ -28,12 +28,15 @@ public class PlayerMovement : MonoBehaviour {
 
     private CameraFollow cameraFollow;
     private PlayerEvents playerEvents;
+    private PlayerAttack playerAttack;
 
-    private void Awake() {
+    private void Awake()
+    {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         rb.freezeRotation = true;
         playerEvents = GetComponent<PlayerEvents>();
+        playerAttack = GetComponent<PlayerAttack>();
         cameraFollow = Camera.main != null ? Camera.main.GetComponent<CameraFollow>() : FindFirstObjectByType<CameraFollow>();
     }
 
@@ -102,8 +105,20 @@ public class PlayerMovement : MonoBehaviour {
         playerEvents.RaiseJump();
     }
 
-    public void OnAttack(InputValue value) {
-        Debug.Log("Primary");
+    public void OnAttack(InputValue value)
+    {
+        Debug.Log("Attack input. IsPressed: " + value.isPressed);
+
+        if (playerAttack == null) return;
+
+        if (value.isPressed)
+        {
+            playerAttack.StartAttackInput();
+        }
+        else
+        {
+            playerAttack.ReleaseAttackInput();
+        }
     }
 
     public void OnDefend(InputValue value) {

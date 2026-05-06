@@ -310,18 +310,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1561748558561640784, guid: e6452064535a0b54ab03c3aeb228b5c2, type: 3}
   m_PrefabInstance: {fileID: 5117715987504764225}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &76843413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76843403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 453a3c1a7db7e9345bf02d4b1a20076e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyEvents
 --- !u!195 &76843414
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1493,23 +1481,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6211962254503638900, guid: 9dccb3e179bcded4487565e4ad6d9d77, type: 3}
   m_PrefabInstance: {fileID: 374370930}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &395709103 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6715440675900824070, guid: e6452064535a0b54ab03c3aeb228b5c2, type: 3}
-  m_PrefabInstance: {fileID: 5117715987504764225}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &395709106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395709103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b994dd523bb2eb47a126bafde1fc282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ZombieGirlAnimationController
 --- !u!1001 &398285377
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7597,16 +7568,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1561748558561640784, guid: e6452064535a0b54ab03c3aeb228b5c2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 76843413}
-    - targetCorrespondingSourceObject: {fileID: 1561748558561640784, guid: e6452064535a0b54ab03c3aeb228b5c2, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 76843414}
     - targetCorrespondingSourceObject: {fileID: 1561748558561640784, guid: e6452064535a0b54ab03c3aeb228b5c2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 76843420}
-    - targetCorrespondingSourceObject: {fileID: 6715440675900824070, guid: e6452064535a0b54ab03c3aeb228b5c2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 395709106}
   m_SourcePrefab: {fileID: 100100000, guid: e6452064535a0b54ab03c3aeb228b5c2, type: 3}
 --- !u!1001 &8858078444354211134
 PrefabInstance:

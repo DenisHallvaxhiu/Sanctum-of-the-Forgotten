@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8786186337795925396}
   - component: {fileID: 3714935949010835054}
   - component: {fileID: 3103189790719931807}
+  - component: {fileID: 6623022888975547578}
+  - component: {fileID: 5070557148439119557}
   m_Layer: 0
   m_Name: curb_corner_B (1)
   m_TagString: Untagged
@@ -90,3 +92,45 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6623022888975547578
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005635420859338002}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0051808073, y: 0.029505402, z: 0.02246344}
+  m_Center: {x: 0.0012103971, y: 0.014749585, z: 0.0066291345}
+--- !u!65 &5070557148439119557
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005635420859338002}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02312864, y: 0.028627839, z: 0.004889302}
+  m_Center: {x: -0.007763535, y: 0.0143107865, z: -0.002157945}

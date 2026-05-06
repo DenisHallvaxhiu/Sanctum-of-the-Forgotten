@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class NewGameButton : MonoBehaviour
 {
-    [SerializeField] private string FirstSceneGame = "BossRoom";
+    [SerializeField] private string FirstSceneGame = "PuzzleRoom";
 
     public void NewGameStart()
     {

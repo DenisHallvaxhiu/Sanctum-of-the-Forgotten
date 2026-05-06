@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/PuzzleRoom.unity
+    guid: e506689f77579f640871f120bbdff5b0
+  - enabled: 1
     path: Assets/Scenes/BossRoom.unity
     guid: 99876075d88f13e4e8926d2cb7f02993
   - enabled: 1

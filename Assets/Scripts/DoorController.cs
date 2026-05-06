@@ -36,11 +36,11 @@ public class DoorController : MonoBehaviour
 
         if (distance <= interactRange && Input.GetKeyDown(interactKey))
         {
-            /*if (requiresKey && (playerInventory == null || !playerInventory.hasKey))
+            if (requiresKey && (playerInventory == null || !playerInventory.hasKey))
             {
                 Debug.Log("This door requires a key.");
                 return;
-            }*/
+            }
 
             if (loadsScene && sceneToLoad != "")
             {

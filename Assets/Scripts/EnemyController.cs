@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour {
+public class EnemyController : MonoBehaviour
+{
     private EnemyEvents enemyEvents;
     private NavMeshAgent agent;
 
@@ -16,32 +17,30 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] private float speed = 3f;
     [SerializeField] private float angularSpeed = 720f;
     [SerializeField] private float acceleration = 20f;
+    [SerializeField] private float rotationSpeed = 10f;
 
     [Header("Attack")]
     [SerializeField] private float attackDistance = 1.8f;
     [SerializeField] private float attackCooldown = 1.2f;
 
-
-
     [Header("Wander")]
     public float wanderRadius = 5f;
     public float waitTimeMin = 1f;
     public float waitTimeMax = 3f;
-    public float wanderStopDistance = 0.2f;
-    public float maxWanderTime = 1f;
-    private float wanderTimer = 0f;
+    public float wanderStopDistance = 0.8f;
+    public float maxWanderTime = 3f;
 
     private float attackTimer;
+    private float wanderTimer;
 
     private Vector3 startPosition;
     private Vector3 wanderTarget;
     private float waitTimer;
     private bool isWaiting;
-
-    private bool lastCanSeePlayer;
     private bool isMoving;
 
-    private void Awake() {
+    private void Awake()
+    {
         enemyEvents = GetComponent<EnemyEvents>();
         agent = GetComponent<NavMeshAgent>();
 
@@ -51,50 +50,56 @@ public class EnemyController : MonoBehaviour {
         agent.speed = speed;
         agent.angularSpeed = angularSpeed;
         agent.acceleration = acceleration;
-        agent.updateRotation = true;
+
+        // Important: we rotate manually to avoid NavMeshAgent fighting our attack rotation
+        agent.updateRotation = false;
 
         attackTimer = 0f;
 
         PickNewWanderTarget();
     }
 
-    void Update() {
+    private void Update()
+    {
         CheckVision();
 
         attackTimer -= Time.deltaTime;
-
         isMoving = false;
 
-        if(canSeePlayer && player != null) {
-            float distanceToPlayer = Vector3.Distance(transform.position,player.position);
+        if (canSeePlayer && player != null)
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            if(distanceToPlayer <= attackDistance) {
+            if (distanceToPlayer <= attackDistance)
+            {
                 isMoving = AttackPlayer();
             }
-            else {
+            else
+            {
                 isWaiting = false;
                 isMoving = MoveTowardsPlayer();
             }
         }
-        else {
+        else
+        {
             isMoving = Wander();
         }
 
         enemyEvents.RaiseMove(isMoving);
     }
 
-    bool AttackPlayer() {
-        agent.ResetPath();
-
-        Vector3 direction = player.position - transform.position;
-        direction.y = 0f;
-
-        if(direction.sqrMagnitude > 0.01f) {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,10f * Time.deltaTime);
+    private bool AttackPlayer()
+    {
+        if (!agent.isStopped)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
         }
 
-        if(attackTimer <= 0f) {
+        RotateTowards(player.position - transform.position);
+
+        if (attackTimer <= 0f)
+        {
             enemyEvents.RaiseAttack();
             attackTimer = attackCooldown;
         }
@@ -102,53 +107,37 @@ public class EnemyController : MonoBehaviour {
         return false;
     }
 
-    void CheckVision() {
-        canSeePlayer = false;
+    private bool MoveTowardsPlayer()
+    {
+        if (player == null) return false;
 
-        if(player == null) return;
-
-        Vector3 origin = transform.position;
-        Vector3 target = player.position;
-
-        Vector3 direction = target - origin;
-        float distance = direction.magnitude;
-
-        if(distance > visionDistance) return;
-
-        direction.Normalize();
-
-        RaycastHit hit;
-        if(Physics.Raycast(origin,direction,out hit,visionDistance)) {
-            if(hit.transform == player || hit.transform.root == player.root) {
-                canSeePlayer = true;
-            }
-        }
-
-    }
-
-    bool MoveTowardsPlayer() {
-        if(player == null) return false;
+        if (agent.isStopped)
+            agent.isStopped = false;
 
         agent.stoppingDistance = stopDistance;
         agent.SetDestination(player.position);
 
-        if(agent.pathPending) return true;
+        RotateTowards(agent.desiredVelocity);
 
-        if(agent.remainingDistance > agent.stoppingDistance) {
-            return true;
-        }
+        if (agent.pathPending) return true;
 
-        return false;
+        return agent.remainingDistance > agent.stoppingDistance;
     }
 
-    bool Wander() {
+    private bool Wander()
+    {
+        if (agent.isStopped)
+            agent.isStopped = false;
+
         agent.stoppingDistance = wanderStopDistance;
 
-        if(isWaiting) {
+        if (isWaiting)
+        {
             waitTimer -= Time.deltaTime;
             agent.ResetPath();
 
-            if(waitTimer <= 0f) {
+            if (waitTimer <= 0f)
+            {
                 isWaiting = false;
                 PickNewWanderTarget();
                 wanderTimer = 0f;
@@ -158,18 +147,21 @@ public class EnemyController : MonoBehaviour {
         }
 
         wanderTimer += Time.deltaTime;
-
         agent.SetDestination(wanderTarget);
 
-        if(agent.pathPending) return true;
+        RotateTowards(agent.desiredVelocity);
 
-        if(agent.remainingDistance <= agent.stoppingDistance) {
+        if (agent.pathPending) return true;
+
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
             isWaiting = true;
-            waitTimer = Random.Range(waitTimeMin,waitTimeMax);
+            waitTimer = Random.Range(waitTimeMin, waitTimeMax);
             return false;
         }
 
-        if(wanderTimer >= maxWanderTime) {
+        if (wanderTimer >= maxWanderTime)
+        {
             PickNewWanderTarget();
             wanderTimer = 0f;
             return false;
@@ -178,14 +170,54 @@ public class EnemyController : MonoBehaviour {
         return true;
     }
 
+    private void RotateTowards(Vector3 direction)
+    {
+        direction.y = 0f;
 
-    void PickNewWanderTarget() {
-        for(int i = 0;i < 10;i++) {
+        if (direction.sqrMagnitude <= 0.01f) return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime
+        );
+    }
+
+    private void CheckVision()
+    {
+        canSeePlayer = false;
+
+        if (player == null) return;
+
+        Vector3 origin = transform.position + Vector3.up * 0.8f;
+        Vector3 target = player.position + Vector3.up * 0.8f;
+
+        Vector3 direction = target - origin;
+        float distance = direction.magnitude;
+
+        if (distance > visionDistance) return;
+
+        direction.Normalize();
+
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, visionDistance))
+        {
+            if (hit.transform == player || hit.transform.root == player.root)
+            {
+                canSeePlayer = true;
+            }
+        }
+    }
+
+    private void PickNewWanderTarget()
+    {
+        for (int i = 0; i < 10; i++)
+        {
             Vector2 randomCircle = Random.insideUnitCircle * wanderRadius;
-            Vector3 randomPoint = startPosition + new Vector3(randomCircle.x,0f,randomCircle.y);
+            Vector3 randomPoint = startPosition + new Vector3(randomCircle.x, 0f, randomCircle.y);
 
-            NavMeshHit hit;
-            if(NavMesh.SamplePosition(randomPoint,out hit,2f,NavMesh.AllAreas)) {
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+            {
                 wanderTarget = hit.position;
                 wanderTimer = 0f;
                 return;
